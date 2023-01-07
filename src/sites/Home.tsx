@@ -13,6 +13,14 @@ function Home() {
     <h1>Home</h1>
     <Row>
         <Col>
+        <p>Aplikacja biblioteczka v0.1</p>
+        <p>Aplikacja powstała jako projekt na zaliczenie przedomiotu <strong>Projektowanie Interfejsów Użytkownika </strong>{ }
+        i wykorzystuje do swojego działania mechanizm <strong>localStorage</strong> przeglądarki.</p>
+        </Col>
+    </Row>
+    <Row>
+        <Col>
+        <br/><br/>
             <h4>Opcje developerskie</h4>
         </Col>
     </Row>

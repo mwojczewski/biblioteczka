@@ -1,11 +1,20 @@
 import React from 'react'
 import { Container, Nav, Navbar } from 'react-bootstrap'
+import logo from '../../public/icon.png'
 
 export function NavbarComponent() {
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="md">
         <Container>
-            <Navbar.Brand href="/">Biblioteczka</Navbar.Brand>
+            <Navbar.Brand href="/">
+              <img
+              alt=""
+              src={logo}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{' '}
+            Biblioteczka</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="me-auto">
