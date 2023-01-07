@@ -15,6 +15,9 @@ type ControlsContextProps = {
     openGenreCreator: () => void
     closeGenreCreator: () => void
     genreCreator: boolean
+    openLocationCreator: () => void
+    closeLocationCreator: () => void
+    locationCreator: boolean
     messages: string[]
     setMessages: (data: string[]) => void
 }
@@ -29,6 +32,7 @@ export function ControlsProvider({children}: ControlsProviderProps) {
     const [bookCreator, setBookCreator] = useState(false)
     const [authorCreator, setAuthorCreator] = useState(false)
     const [genreCreator, setGenreCreator] = useState(false)
+    const [locationCreator, setLocationCreator] = useState(false)
     const [messages, setMessages] = useState<string[]>([])
 
 
@@ -41,11 +45,15 @@ export function ControlsProvider({children}: ControlsProviderProps) {
     const openGenreCreator = () => setGenreCreator(true)
     const closeGenreCreator = () => setGenreCreator(false)
 
+    const openLocationCreator = () => setLocationCreator(true)
+    const closeLocationCreator = () => setLocationCreator(false)
+
     return (
     <ControlsContext.Provider value={{
         openBookCreator, closeBookCreator, bookCreator, 
         openAuthorCreator, closeAuthorCreator, authorCreator,
         openGenreCreator, closeGenreCreator, genreCreator,
+        openLocationCreator, closeLocationCreator, locationCreator,
         messages, setMessages}}>
         {children}
     </ControlsContext.Provider>)

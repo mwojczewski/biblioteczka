@@ -40,14 +40,14 @@ export default function GenreListEntryComponent(genre:Genre) {
         <td>
             <Modal show={modalState} onHide={closeModal} centered>
                 <Modal.Header closeButton>
-                    <Modal.Title>Kasowanie autora</Modal.Title>
+                    <Modal.Title>Kasowanie Gatunku</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Czy jesteś pewien, że chcesz usunąć "{genre.name}" z biblioteczki?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={deleteGenre}>
+                    <Button variant="outline-danger" onClick={deleteGenre}>
                          Usuń
                     </Button>
-                    <Button variant="primary" onClick={closeModal}>
+                    <Button variant="outline-primary" onClick={closeModal}>
                         Anuluj
                     </Button>
                  </Modal.Footer>

@@ -22,7 +22,7 @@ function Author() {
         </Row>
         {
             messages.map(message => (
-                <Alert variant="success" onClick={() => { setMessages(messages.filter(msg => msg !== message))}} dismissible>{message}</Alert>
+                <Alert variant="success" key={uuidV4()} onClick={() => { setMessages(messages.filter(msg => msg !== message))}} dismissible>{message}</Alert>
             ))
         }
         <Row>
@@ -44,7 +44,7 @@ function Author() {
                 <tbody>
                     {
                     authors.length == 0 ?
-                        (<tr><td colSpan={3} className="text-center fw-bold">W tej chwili lista jest pusta.</td></tr>)
+                        (<tr><td colSpan={3} key={uuidV4()} className="text-center fw-bold">W tej chwili lista jest pusta.</td></tr>)
                     :
                         authors.map(author => (<AuthorListEntryComponent key={uuidV4()} {...author} />))
                     }

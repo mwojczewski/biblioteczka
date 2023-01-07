@@ -45,10 +45,10 @@ export default function AuthorListEntryComponent(author:Author) {
                 </Modal.Header>
                 <Modal.Body>Czy jesteś pewien, że chcesz usunąć "{author.name}" z biblioteczki?</Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={deleteAuthor}>
+                    <Button variant="outline-danger" onClick={deleteAuthor}>
                          Usuń
                     </Button>
-                    <Button variant="primary" onClick={closeModal}>
+                    <Button variant="outline-primary" onClick={closeModal}>
                         Anuluj
                     </Button>
                  </Modal.Footer>

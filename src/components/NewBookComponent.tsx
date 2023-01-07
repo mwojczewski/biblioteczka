@@ -13,12 +13,11 @@ type newBookProps = {
 
 export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => void) {
 
-  const { closeBookCreator } = useControlsContext()
+  const { closeBookCreator, setMessages } = useControlsContext()
 
   const titleRef = useRef<HTMLInputElement>(null)
   const notesRef = useRef<HTMLTextAreaElement>(null)
   const { genres, setGenres, authors, setAuthors, books, setBooks, locations, setLocations } = useStorageContext();
-  const { setMessages } = useControlsContext();
   const [ localAuthors, setLocalAuthors ] = useState<Author[]>([]) 
   const [ localGenres, setLocalGenres ] = useState<Genre[]>([]);
   const [ localLocation, setLocalLocation ] = useState<Location[]>([]);
@@ -65,6 +64,9 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
 
     // powiadamiamy o powodzeniu
     setMessages([`Pozycja "${book.title}" została dodana do biblioteczki.`])
+
+    closeBookCreator()
+
   }
 
   return (

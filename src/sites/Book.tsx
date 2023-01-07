@@ -60,7 +60,7 @@ function Book() {
        
         setBookFilter([...tempbooks])
 
-    }, [localBooks, localAuthors, localGenres, localLocations])
+    }, [localBooks, localAuthors, localGenres, localLocations, books])
     
 
   return (
@@ -72,7 +72,7 @@ function Book() {
         </Row>
         {
             messages.map(message => (
-                <Alert variant="success" onClick={() => { setMessages(messages.filter(msg => msg !== message))}} dismissible>{message}</Alert>
+                <Alert variant="success" key={uuidV4()} onClick={() => { setMessages(messages.filter(msg => msg !== message))}} dismissible>{message}</Alert>
             ))
         }
         <Row>
@@ -152,7 +152,7 @@ function Book() {
                 <tbody>
                     {
                     bookFilter.length == 0 ?
-                        (<tr><td colSpan={6} className="text-center fw-bold">W tej chwili lista jest pusta.</td></tr>)
+                        (<tr><td colSpan={6} key={uuidV4()} className="text-center fw-bold">W tej chwili lista jest pusta.</td></tr>)
                     :
                         bookFilter.map(book => (<BookListEntryComponent key={uuidV4()} {...book} />))
                     }
