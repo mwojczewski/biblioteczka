@@ -12,7 +12,7 @@ type newAuthorProps = {
 
 export function NewLocationComponent({isOpen}:newAuthorProps) {
 
-    const { closeLocationCreator, setMessages } = useControlsContext()
+    const { closeCreatorPane, setMessages } = useControlsContext()
     const { locations, setLocations } = useStorageContext()
 
     const locationRef = useRef<HTMLInputElement>(null)
@@ -26,12 +26,12 @@ export function NewLocationComponent({isOpen}:newAuthorProps) {
 
         setMessages([`Lokalizacja została dodana do bazy.`])
 
-        closeLocationCreator()
+        closeCreatorPane()
     }
 
 
     return (
-        <Offcanvas show={isOpen} onHide={closeLocationCreator} placement="end">
+        <Offcanvas show={isOpen} onHide={closeCreatorPane} placement="end">
             <Offcanvas.Header closeButton><h3>Dodaj Lokalizację</h3></Offcanvas.Header>
             <Offcanvas.Body>
                 <Stack gap={2}>

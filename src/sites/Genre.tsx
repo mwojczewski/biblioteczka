@@ -5,9 +5,10 @@ import { useStorageContext } from '../contexts/StorageContext';
 import { v4 as uuidV4 } from 'uuid';
 import GenreListEntryComponent from '../components/GenreListEntryComponent';
 import { NewGenreComponent } from '../components/NewGenreComponent';
+import { EditGenreComponent } from '../components/EditGenreComponent';
 
 function Genre() {
-    const { openGenreCreator, genreCreator } = useControlsContext()
+    const { openCreatorPane, creatorPane, editorPane } = useControlsContext()
     const { genres } = useStorageContext()
 
     const { messages, setMessages } = useControlsContext();
@@ -27,7 +28,7 @@ function Genre() {
         }
         <Row>
             <Col className="d-flex justify-content-end">
-                <Button variant="success" onClick={openGenreCreator}>Dodaj nowy gatunek</Button>
+                <Button variant="success" onClick={openCreatorPane}>Dodaj nowy gatunek</Button>
             </Col>
         </Row>
         <Row>
@@ -37,7 +38,7 @@ function Genre() {
                     <tr>
                         <th>#</th>
                         <th style={{width: "60%"}}>Gatunek</th>
-                        <th>Ilość pozycji w bazie</th>
+                        <th>Ilość pozycji w bibliotece</th>
                         <th>Opcje</th>
                     </tr>
                 </thead>
@@ -52,7 +53,8 @@ function Genre() {
             </Table>
             </Col>
         </Row>
-        <NewGenreComponent isOpen={genreCreator} />
+        <NewGenreComponent isOpen={creatorPane} />
+        <EditGenreComponent isOpen={editorPane} />
     </>
   )
 }

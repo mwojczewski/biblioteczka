@@ -3,13 +3,12 @@ import { Row, Col, Alert, Button, Table } from 'react-bootstrap';
 import { useControlsContext } from '../contexts/ControlsContext';
 import { useStorageContext } from '../contexts/StorageContext';
 import { v4 as uuidV4 } from 'uuid';
-import GenreListEntryComponent from '../components/GenreListEntryComponent';
 import LocationListEntryComponent from '../components/LocationListEntryComponent';
-import { NewGenreComponent } from '../components/NewGenreComponent';
 import { NewLocationComponent } from '../components/NewLocationComponent';
+import { EditLocationComponent } from '../components/EditLocationComponent';
 
 export default function Location() {
-    const { openLocationCreator, locationCreator } = useControlsContext()
+    const { openCreatorPane, creatorPane, editorPane } = useControlsContext()
     const { locations } = useStorageContext()
 
     const { messages, setMessages } = useControlsContext()
@@ -28,7 +27,7 @@ export default function Location() {
         }
         <Row>
             <Col className="d-flex justify-content-end">
-                <Button variant="success" onClick={openLocationCreator}>Dodaj nową lokalizację</Button>
+                <Button variant="success" onClick={openCreatorPane}>Dodaj nową lokalizację</Button>
             </Col>
         </Row>
         <Row>
@@ -38,7 +37,7 @@ export default function Location() {
                     <tr>
                         <th>#</th>
                         <th>Lokalizacja</th>
-                        <th>Ilość pozycji w bazie</th>
+                        <th>Ilość pozycji w bibliotece</th>
                         <th>Opcje</th>
                     </tr>
                 </thead>
@@ -53,6 +52,8 @@ export default function Location() {
             </Table>
             </Col>
         </Row>
-        <NewLocationComponent isOpen={locationCreator} />    </>
+        <NewLocationComponent isOpen={creatorPane} />    
+        <EditLocationComponent isOpen={editorPane} />    
+        </>
   )
 }

@@ -12,7 +12,7 @@ type newAuthorProps = {
 
 export function NewAuthorComponent({isOpen}:newAuthorProps) {
 
-    const { closeAuthorCreator, setMessages } = useControlsContext()
+    const { closeCreatorPane, setMessages } = useControlsContext()
     const { authors, setAuthors } = useStorageContext()
 
     const authorRef = useRef<HTMLInputElement>(null)
@@ -26,12 +26,12 @@ export function NewAuthorComponent({isOpen}:newAuthorProps) {
 
         setMessages([`Autor został dodany do bazy.`])
 
-        closeAuthorCreator()
+        closeCreatorPane()
     }
 
 
     return (
-        <Offcanvas show={isOpen} onHide={closeAuthorCreator} placement="end">
+        <Offcanvas show={isOpen} onHide={closeCreatorPane} placement="end">
             <Offcanvas.Header closeButton><h3>Dodaj Autora</h3></Offcanvas.Header>
             <Offcanvas.Body>
                 <Stack gap={2}>

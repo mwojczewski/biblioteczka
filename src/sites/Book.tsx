@@ -7,25 +7,24 @@ import { useStorageContext } from '../contexts/StorageContext';
 import { v4 as uuidV4 } from 'uuid'
 import { useEffect, useState } from 'react';
 import Select from 'react-select'
+import { EditBookComponent } from '../components/EditBookComponent';
 
-
-
-type NewBookProps = {
-    onSubmit: (data: BookData) => void
+type localData = {
+    id: string
+    name: string
 }
 
 function Book() {
 
-    const { openBookCreator, bookCreator } = useControlsContext()
+    const { openCreatorPane, creatorPane, editorPane } = useControlsContext()
     const { books, authors, genres, locations } = useStorageContext()
-    const { setBooks, setAuthors, setGenres, setLocations } = useStorageContext()
 
     const { messages, setMessages } = useControlsContext()
 
-    const [localBooks, setLocalBooks] = useState<RawBookData[]>([])
-    const [localAuthors, setLocalAuthors] = useState<Author[]>([])
-    const [localGenres, setLocalGenres] = useState<Genre[]>([])
-    const [localLocations, setLocalLocations] = useState<Location[]>([])
+    const [localBooks, setLocalBooks] = useState<localData[]>([])
+    const [localAuthors, setLocalAuthors] = useState<localData[]>([])
+    const [localGenres, setLocalGenres] = useState<localData[]>([])
+    const [localLocations, setLocalLocations] = useState<localData[]>([])
 
     const [bookFilter, setBookFilter] = useState<RawBook[]>([])
 
@@ -77,12 +76,12 @@ function Book() {
         }
         <Row>
             <Col className="d-flex justify-content-end">
-                <Button variant="success" onClick={openBookCreator}>Dodaj nową książkę</Button>
+                <Button variant="success" onClick={openCreatorPane}>Dodaj nową książkę</Button>
             </Col>
         </Row>
         <Row>
             <Col>
-            <Table className='mt-5' bordered hover responsive>
+            <Table className='mt-5' bordered hover>
                 <thead>
                     <tr>
                         <th style={{width: "3%"}}>#</th>
@@ -95,7 +94,8 @@ function Book() {
                     <tr>
                         <th>{ }</th>
                         <th>
-                        <Select 
+                        <Select
+                            style={{zIndex: 100}} 
                             name="books"
                             options={books.map(book => { 
                             return {value: book.id, label: book.title}
@@ -160,29 +160,9 @@ function Book() {
             </Table>
             </Col>
         </Row>
-        <Row>
-            <Col>
-            <h5>Opcje developerskie</h5></Col>
-        </Row>
-        
-        <Row>
-            <Col className="d-flex justify-content-center mb-4">
-                <Button className="me-4" variant="warning" onClick={() => {console.log(books)}}>Zrzut books</Button>
-                <Button className="me-4" variant="warning" onClick={() => {console.log(authors)}}>Zrzut authors</Button>
-                <Button className="me-4" variant="warning" onClick={() => {console.log(genres)}}>Zrzut genres</Button>
-                <Button variant="warning" onClick={() => {console.log(locations)}}>Zrzut locations</Button>
+        <NewBookComponent isOpen={creatorPane} />
+        <EditBookComponent isOpen={editorPane} />
 
-            </Col>
-        </Row>
-        <Row>
-            <Col className="d-flex justify-content-center">
-                <Button className="me-4" variant="danger" onClick={() => {setBooks([])}}>Usuń books</Button>
-                <Button className="me-4" variant="danger" onClick={() => {setAuthors([])}}>Usuń authors</Button>
-                <Button className="me-4" variant="danger" onClick={() => {setGenres([])}}>Usuń genres</Button>
-                <Button variant="danger" onClick={() => {setLocations([])}}>Usuń locations</Button>
-            </Col>
-        </Row>
-        <NewBookComponent isOpen={bookCreator} />
     </>
   )
 }

@@ -6,9 +6,10 @@ import { useControlsContext } from '../contexts/ControlsContext';
 import { useStorageContext } from '../contexts/StorageContext';
 import { v4 as uuidV4 } from 'uuid';
 import { NewAuthorComponent } from '../components/NewAuthorComponent';
+import { EditAuthorComponent } from '../components/EditAuthorComponent';
 
 function Author() {
-    const { openAuthorCreator, authorCreator } = useControlsContext()
+    const { openCreatorPane, creatorPane, editorPane } = useControlsContext()
     const { authors } = useStorageContext()
 
     const { messages, setMessages } = useControlsContext();
@@ -27,7 +28,7 @@ function Author() {
         }
         <Row>
             <Col className="d-flex justify-content-end">
-                <Button variant="success" onClick={openAuthorCreator}>Dodaj nowego autora</Button>
+                <Button variant="success" onClick={openCreatorPane}>Dodaj nowego autora</Button>
             </Col>
         </Row>
         <Row>
@@ -37,7 +38,7 @@ function Author() {
                     <tr>
                         <th>#</th>
                         <th>Autor</th>
-                        <th>Ilość pozycji w bazie</th>
+                        <th>Ilość pozycji w bibliotece</th>
                         <th>Opcje</th>
                     </tr>
                 </thead>
@@ -52,7 +53,9 @@ function Author() {
             </Table>
             </Col>
         </Row>
-        <NewAuthorComponent isOpen={authorCreator} />
+        <NewAuthorComponent isOpen={creatorPane} />
+        <EditAuthorComponent isOpen={editorPane} />
+
     </>
   )
 }

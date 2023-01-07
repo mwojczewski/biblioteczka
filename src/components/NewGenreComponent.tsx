@@ -11,7 +11,7 @@ type newAuthorProps = {
 
 export function NewGenreComponent({isOpen}:newAuthorProps) {
 
-    const { closeGenreCreator, setMessages } = useControlsContext()
+    const { closeCreatorPane, setMessages } = useControlsContext()
     const { genres, setGenres } = useStorageContext()
 
     const genreRef = useRef<HTMLInputElement>(null)
@@ -26,12 +26,12 @@ export function NewGenreComponent({isOpen}:newAuthorProps) {
 
         setMessages([`Gatunek został dodany do bazy.`])
 
-        closeGenreCreator()
+        closeCreatorPane()
     }
 
 
     return (
-        <Offcanvas show={isOpen} onHide={closeGenreCreator} placement="end">
+        <Offcanvas show={isOpen} onHide={closeCreatorPane} placement="end">
             <Offcanvas.Header closeButton><h3>Dodaj Gatunek</h3></Offcanvas.Header>
             <Offcanvas.Body>
                 <Stack gap={2}>

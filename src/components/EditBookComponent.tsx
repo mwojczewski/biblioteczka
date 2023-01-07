@@ -1,4 +1,4 @@
-import React, { FormEvent, useRef, useState } from 'react'
+import React, { FormEvent, useEffect, useRef, useState } from 'react'
 import { Button, Form, FormLabel, Offcanvas, Stack } from 'react-bootstrap'
 import { useControlsContext } from '../contexts/ControlsContext'
 import CreatibleReactSelect from 'react-select/creatable'
@@ -6,14 +6,15 @@ import { useStorageContext } from '../contexts/StorageContext'
 import { v4 as uuidV4 } from 'uuid'
 import { Author, Genre, RawBook, RawBookData } from '../App'
 import { valueContainerCSS } from 'react-select/dist/declarations/src/components/containers'
+import { getPathContributingMatches } from '@remix-run/router/dist/utils'
 
-type newBookProps = {
+type editBookProps = {
   isOpen: boolean
 }
 
-export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => void) {
+export function EditBookComponent({isOpen}:editBookProps) {
 
-  const { closeCreatorPane, setMessages } = useControlsContext()
+  const { closeEditorPane, setMessages, editorTargetID } = useControlsContext()
 
   const titleRef = useRef<HTMLInputElement>(null)
   const notesRef = useRef<HTMLTextAreaElement>(null)
@@ -21,11 +22,17 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
   const [ localAuthors, setLocalAuthors ] = useState<Author[]>([]) 
   const [ localGenres, setLocalGenres ] = useState<Genre[]>([]);
   const [ localLocation, setLocalLocation ] = useState<Location[]>([]);
+  const [ editedBook, setEditedBook ] = useState()
+
+
+  useEffect(() => {
+      setEditedBook(books.find(book => book.id === editorTargetID))
+    }, [editorTargetID])
 
   function handleSubmit(e: FormEvent) {
 
     e.preventDefault()
-
+    
     // dodajemy nowych autorów
     localAuthors.map(la => {
       if (la?.new == true) {
@@ -51,7 +58,7 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
     }
 
     const book: RawBook = {
-      id: uuidV4(),
+      id: editedBook!.id,
       title: titleRef.current!.value,
       authorIDs: localAuthors.map(author => {return author.id}),
       genreIDs: localGenres.map(genre => {return genre.id}), 
@@ -60,24 +67,24 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
     }
 
     // dodajemy nową książkę do kontekstu
-    setBooks([...books, book])
+    // setBooks([...books, book])
 
     // powiadamiamy o powodzeniu
-    setMessages([`Pozycja "${book.title}" została dodana do biblioteczki.`])
+    setMessages([`Pozycja "${book.title}" została zmieniona.`])
 
-    closeCreatorPane()
+    closeEditorPane()
 
   }
 
   return (
-    <Offcanvas show={isOpen} onHide={closeCreatorPane} placement="end">
-      <Offcanvas.Header closeButton><h3>Dodaj książkę</h3></Offcanvas.Header>
+    <Offcanvas show={isOpen} onHide={closeEditorPane} placement="end">
+      <Offcanvas.Header closeButton><h3>Edytuj książkę</h3></Offcanvas.Header>
       <Offcanvas.Body>
         <Stack gap={2}>
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="bookTitle">
           <Form.Label>Tytuł pozycji</Form.Label>
-          <Form.Control name="title "type="text" ref={titleRef} placeholder="Podaj tytuł" required />
+          <Form.Control name="title "type="text" ref={titleRef} defaultValue={editedBook?.title} placeholder="Podaj tytuł" required />
         </Form.Group>
         <Form.Group className="mb-3" controlId="bookAuthors">
           <Form.Label>Autorzy</Form.Label>
@@ -85,7 +92,7 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
             name="authors"
             options={authors.map(author => { 
               return {value: author.id, label: author.name}
-              })}
+              })} 
               onChange={auth => {
                 setLocalAuthors(auth.map(a => {
                   return {id: a.value, name: a.label, new: a?.__isNew__}
@@ -121,7 +128,7 @@ export function NewBookComponent({isOpen}:newBookProps, msg:(data: string[]) => 
         </Form.Group>
         <Form.Group className="mb-3" controlId="bookTitle">
           <Form.Label>Notatki</Form.Label>
-          <Form.Control as="textarea" rows={5} type="text" ref={notesRef} name="notes" placeholder="dodaj notatki" />
+          <Form.Control as="textarea" rows={5} type="text" ref={notesRef} name="notes" defaultValue={editedBook?.notes} placeholder="dodaj notatki" />
         </Form.Group>
         <Button variant='success' type="submit">Zapisz</Button>
       </Form>
